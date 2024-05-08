@@ -34,6 +34,21 @@ namespace EmployeeManagement.Controllers
                 ModelState.AddModelError("lastname", "First Name and Last Name can not be same.");
             }
 
+            var existingEmail = _db.Employees.FirstOrDefault(x => x.Email == obj.Email);
+            if (existingEmail != null)
+            {
+                TempData["error"] = "Email already Exists";
+                ModelState.AddModelError("Email", "Email already exists");
+            }
+
+            var existingPhone = _db.Employees.FirstOrDefault(p => p.Phone == obj.Phone);
+            if (existingPhone != null)
+            {
+                TempData["error"] = "Contact Number already Exists";
+                ModelState.AddModelError("Phome", "Contact number already exists");
+            }
+
+
             if (ModelState.IsValid) 
             {
                 if (obj.ProfilePic != null &&  obj.ProfilePic.Length > 0)
@@ -83,10 +98,33 @@ namespace EmployeeManagement.Controllers
         [HttpPost]
         public IActionResult Edit(Employee obj)
         {
+            var existingEmail = _db.Employees.FirstOrDefault(x => x.Email == obj.Email);
+            if (existingEmail != null)
+            {
+                TempData["error"] = "Email already Exists";
+                ModelState.AddModelError("Email", "Email already exists");
+            }
+
+            var existingPhone = _db.Employees.FirstOrDefault(p => p.Phone == obj.Phone);
+            if (existingPhone != null)
+            {
+                TempData["error"] = "Contact Number already Exists";
+                ModelState.AddModelError("Phome", "Contact number already exists");
+            }
+
             if (ModelState.IsValid)
             {
                 if (obj.ProfilePic != null && obj.ProfilePic.Length > 0)
                 {
+                    if (!string.IsNullOrEmpty(obj.ProfilePicName))
+                    {
+                        string delFilePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot", "images", "employees", obj.ProfilePicName);
+                        if (System.IO.File.Exists(delFilePath))
+                        {
+                            System.IO.File.Delete(delFilePath);
+                        }
+                    }
+
                     string extension = Path.GetExtension(obj.ProfilePic.FileName).ToLower();
                     string fileName = obj.FirstName.ToLower().Replace(' ', '-') + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + extension;
                     obj.ProfilePicName = fileName;
