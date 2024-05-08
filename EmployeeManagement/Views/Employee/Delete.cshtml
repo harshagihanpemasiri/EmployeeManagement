@@ -1,0 +1,103 @@
+﻿@model Employee
+
+<form method="post">
+    <input asp-for="EmployeeId" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Delete an Employee</h2>
+            <hr />
+        </div>
+
+        <div class="text-center mb-4">
+            @if (!string.IsNullOrEmpty(Model.ProfilePicName))
+            {
+                <img src="~/images/employees/@Model.ProfilePicName" alt="@Model.FirstName @Model.LastName" class="img-fluid rounded-circle" style="width: 100px; height: 100px;" />
+            }
+            else
+            {
+                <span>No Image</span>
+            }
+        </div>
+        <div class="mb-3 row">
+            <label>First Name</label>
+            <input asp-for="FirstName" type="text" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row">
+            <label>Last Name</label>
+            <input asp-for="LastName" type="text" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row">
+            <label>Province</label>
+            <select asp-for="Province" disabled class="form-control">
+                <option value="">Select Province</option>
+                <option value="Western">Western</option>
+                <option value="Central">Central</option>
+                <option value="Southern">Southern</option>
+                <option value="Northen">Northen</option>
+                <option value="Eastern">Eastern</option>
+                <option value="North-West">North-Western</option>
+                <option value="North-Central">North-Central</option>
+                <option value="Uva">Uva</option>
+                <option value="Sabaragamuwa">Sabaragamuwa</option>
+            </select>
+        </div>
+
+
+        <div class="mb-3 row">
+            <label>Email</label>
+            <input asp-for="Email" type="text" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row">
+            <label>Contact No</label>
+            <input asp-for="Phone" type="text" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row">
+            <label>Date of Birth</label>
+            <input asp-for="DOB" type="date" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row">
+            <label>Position</label>
+            <input asp-for="Position" type="text" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row">
+            <label>Salary</label>
+            <input asp-for="Salary" type="text" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row">
+            <label>Gender</label>
+            <div>
+                <label><input asp-for="Gender" type="radio" disabled name="gender" value="Male" checked />Male</label><br />
+                <label><input asp-for="Gender" type="radio" disabled name="gender" value="Female" />Female</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-danger form-control">Delete Employee</button>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-secondary form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+
+
+
+    </div>
+</form>
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

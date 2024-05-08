@@ -1,0 +1,91 @@
+﻿@model List<Employee>
+
+<div class="container">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Employee List</h2>
+        </div>
+
+        <div class="col-6 text-end">
+            <a asp-controller="Employee" asp-action="AddNew" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i>Add new Employee
+            </a>
+        </div>
+    </div>
+
+<div style="overflow-x: auto;">
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+        <th>
+            Profile Pic
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Province
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Contact
+        </th>
+        <th>
+            DOB
+        </th>
+        <th>
+            Position
+        </th>
+        <th>
+            Salary(Rs)
+        </th>
+        <th>
+            Gender
+        </th>
+        <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model.OrderBy(u=>u.FirstName))
+        {
+            <tr>
+                <td>
+                            @if (!string.IsNullOrEmpty(obj.ProfilePicName))
+                            {
+                                <img src="~/images/employees/@obj.ProfilePicName" alt="@obj.FirstName @obj.LastName" class="img-fluid rounded-circle" style="width: 50px; height: 50px;" />
+
+                            }else{
+                                <span>No Image</span>
+                            }
+                        </td>
+                <td>@obj.FirstName</td>
+                <td>@obj.LastName</td>
+                <td>@obj.Province</td>
+                <td>@obj.Email</td>
+                <td>@obj.Phone</td>
+                <td>@obj.DOB.ToString("yyyy-MM-dd")</td>
+                <td>@obj.Position</td>
+                <td>@obj.Salary</td>
+                <td>@obj.Gender</td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Employee" asp-action="Edit" asp-route-id="@obj.EmployeeId" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i>Edit
+                        </a>
+                                <a asp-controller="Employee" asp-action="Delete" asp-route-id="@obj.EmployeeId" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash3-fill"></i>Delete
+                                </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+</div>
